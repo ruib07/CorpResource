@@ -1,0 +1,53 @@
+.appbar-header {
+    background-color: white !important;
+    color: black !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1200;
+    padding: 0 1rem;
+}
+
+.drawer-custom {
+    background-color: #333 !important;
+    color: white !important;
+}
+
+    .drawer-custom .mud-nav-link {
+        color: white !important;
+    }
+
+        .drawer-custom .mud-nav-link.mud-nav-link-active {
+            background-color: #555 !important;
+        }
+
+    .drawer-custom .mud-icon-root {
+        color: white !important;
+    }
+
+.page {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow-x: auto;
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}
+
+.main-content--shifted {
+    margin-left: 250px;
+}
+
+@media (max-width: 768px) {
+    .main-content,
+    .main-content--shifted {
+        margin-left: 0 !important;
+        padding-top: 56px;
+    }
+}

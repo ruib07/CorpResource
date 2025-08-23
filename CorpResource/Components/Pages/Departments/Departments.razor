@@ -1,0 +1,31 @@
+﻿@page "/"
+@page "/departments"
+
+<MudTable Items="@_departments" Hover="true" Bordered="true" Striped="true" RowsPerPage="10">
+    <HeaderContent>
+        @foreach (var heading in headings)
+        {
+            <MudTh>@heading</MudTh>
+        }
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="ManagerId">@context.ManagerId</MudTd>
+        <MudTd DataLabel="CreatedAt">@context.CreatedAt.ToString("dd/MM/yyyy HH:mm")</MudTd>
+        @* <MudTd>
+            <div class="d-flex justify-content-between">
+                <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                               Color="Color.Primary"
+                               OnClick="@(() => EditDepartment(context.Id))" />
+
+                <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                               Color="Color.Error"
+                               OnClick="@(() => DeleteDepartment(context.Id))" />
+            </div>
+        </MudTd> *@
+    </RowTemplate>
+
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
