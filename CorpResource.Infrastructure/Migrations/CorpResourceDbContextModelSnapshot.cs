@@ -66,7 +66,7 @@ namespace CorpResource.Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.Property<Guid>("ManagerId")
+                    b.Property<Guid?>("ManagerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -76,7 +76,9 @@ namespace CorpResource.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ManagerId");
+                    b.HasIndex("ManagerId")
+                        .IsUnique()
+                        .HasFilter("[ManagerId] IS NOT NULL");
 
                     b.ToTable("Departments", (string)null);
                 });
@@ -242,10 +244,9 @@ namespace CorpResource.Infrastructure.Migrations
             modelBuilder.Entity("CorpResource.Domain.Models.Department", b =>
                 {
                     b.HasOne("CorpResource.Domain.Models.User", "Manager")
-                        .WithMany("Departments")
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithOne("ManagedDepartment")
+                        .HasForeignKey("CorpResource.Domain.Models.Department", "ManagerId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Manager");
                 });
@@ -293,10 +294,12 @@ namespace CorpResource.Infrastructure.Migrations
 
             modelBuilder.Entity("CorpResource.Domain.Models.User", b =>
                 {
-                    b.HasOne("CorpResource.Domain.Models.Department", null)
+                    b.HasOne("CorpResource.Domain.Models.Department", "Department")
                         .WithMany("Users")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("CorpResource.Domain.Models.Department", b =>
@@ -315,7 +318,7 @@ namespace CorpResource.Infrastructure.Migrations
                 {
                     b.Navigation("AuditLogs");
 
-                    b.Navigation("Departments");
+                    b.Navigation("ManagedDepartment");
 
                     b.Navigation("Notifications");
 

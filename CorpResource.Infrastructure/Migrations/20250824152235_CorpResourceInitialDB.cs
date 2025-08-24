@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CorpResource.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CorpResourceInitialDatabase : Migration
+    public partial class CorpResourceInitialDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,7 @@ namespace CorpResource.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    ManagerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ManagerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
@@ -148,7 +148,9 @@ namespace CorpResource.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_ManagerId",
                 table: "Departments",
-                column: "ManagerId");
+                column: "ManagerId",
+                unique: true,
+                filter: "[ManagerId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_UserId",
@@ -189,7 +191,7 @@ namespace CorpResource.Infrastructure.Migrations
                 column: "ManagerId",
                 principalTable: "Users",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.SetNull);
         }
 
         /// <inheritdoc />

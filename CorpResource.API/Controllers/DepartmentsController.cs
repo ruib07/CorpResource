@@ -66,5 +66,4 @@ public class DepartmentsController : ControllerBase
 
         return NoContent();
     }
-
 }

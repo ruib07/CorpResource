@@ -16,7 +16,7 @@ public class UsersConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Role).IsRequired();
         builder.Property(u => u.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-        builder.HasOne<Department>()
+        builder.HasOne(u => u.Department)
                .WithMany(d => d.Users)
                .HasForeignKey(u => u.DepartmentId)
                .OnDelete(DeleteBehavior.SetNull);

@@ -1,4 +1,5 @@
 ﻿@using MudBlazor
+@using CorpResource.Domain.Models
 
 <MudDialog>
     <DialogContent>
@@ -8,7 +9,17 @@
                     <MudTextField @bind-Value="Department.Name" Label="Name" Required />
                 </MudItem>
                 <MudItem xs="12">
-                    <MudTextField @bind-Value="Department.ManagerId" Label="Manager Id" Required />
+                    <MudSelect T="User"
+                               Label="Manager"
+                               @bind-Value="SelectedUser">
+                        @if (Users is not null)
+                        {
+                            @foreach (var user in Users)
+                            {
+                                <MudSelectItem Value="@user">@user.FullName</MudSelectItem>
+                            }
+                        }
+                    </MudSelect>
                 </MudItem>
             </MudGrid>
 

@@ -10,6 +10,7 @@ public class DepartmentRepository : IDepartmentRepository
 {
     private readonly CorpResourceDbContext _context;
     private DbSet<Department> Departments => _context.Departments;
+    private DbSet<User> Users => _context.Users;
 
     public DepartmentRepository(CorpResourceDbContext context)
     {
@@ -32,6 +33,18 @@ public class DepartmentRepository : IDepartmentRepository
         {
             await Departments.AddAsync(department);
             await _context.SaveChangesAsync();
+
+            if (department.ManagerId != null)
+            {
+                var manager = await Users.FirstOrDefaultAsync(m => m.Id == department.ManagerId);
+
+                if (manager is not null && manager.DepartmentId == null)
+                {
+                    manager.DepartmentId = department.Id;
+                    Users.Update(manager);
+                    await _context.SaveChangesAsync();
+                }
+            }
         }
         else 
         {

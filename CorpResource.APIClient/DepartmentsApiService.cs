@@ -13,6 +13,7 @@ public class DepartmentsApiService : IDepartmentsApiService
     {
         _httpClient = httpClientFactory.CreateClient("CorpResourceApi");
     }
+
     public async Task<IEnumerable<Department>> GetDepartments()
     {
         return await _httpClient.GetFromJsonAsync<IEnumerable<Department>>(_baseUrl);

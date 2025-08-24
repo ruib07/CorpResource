@@ -1,15 +1,14 @@
-﻿@page "/"
-@page "/departments"
+﻿@page "/users"
 
-<h1>Departments</h1>
+<h1>Users</h1>
 
 <div class="d-flex justify-content-end mb-4">
-    <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" OnClick="@CreateDepartment">
-        Department
+    <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" OnClick="@CreateUser">
+        User
     </MudButton>
 </div>
 
-<MudTable Items="@_departments" Hover="true" Bordered="true" Striped="true" RowsPerPage="10">
+<MudTable Items="@_users" Hover="true" Bordered="true" Striped="true" RowsPerPage="10">
     <HeaderContent>
         @foreach (var heading in headings)
         {
@@ -17,18 +16,21 @@
         }
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="ManagerId">@context.ManagerId</MudTd>
+        <MudTd DataLabel="UserName">@context.UserName</MudTd>
+        <MudTd DataLabel="FullName">@context.FullName</MudTd>
+        <MudTd DataLabel="Email">@context.Email</MudTd>
+        <MudTd DataLabel="Role">@context.Role</MudTd>
         <MudTd DataLabel="CreatedAt">@context.CreatedAt.ToString("dd/MM/yyyy HH:mm")</MudTd>
+        <MudTd DataLabel="DepartmentId">@context.DepartmentId</MudTd>
         @* <MudTd>
             <div class="d-flex justify-content-between">
                 <MudIconButton Icon="@Icons.Material.Filled.Edit"
                                Color="Color.Primary"
-                               OnClick="@(() => EditDepartment(context.Id))" />
+                               OnClick="@(() => EditUser(context.Id))" />
 
                 <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                Color="Color.Error"
-                               OnClick="@(() => DeleteDepartment(context.Id))" />
+                               OnClick="@(() => DeleteUser(context.Id))" />
             </div>
         </MudTd> *@
     </RowTemplate>

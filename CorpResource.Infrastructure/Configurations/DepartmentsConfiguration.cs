@@ -14,8 +14,8 @@ public class DepartmentsConfiguration : IEntityTypeConfiguration<Department>
         builder.Property(d => d.CreatedAt).IsRequired().HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         builder.HasOne(d => d.Manager)
-               .WithMany(d => d.Departments)
-               .HasForeignKey(d => d.ManagerId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .WithOne(u => u.ManagedDepartment)
+               .HasForeignKey<Department>(d => d.ManagerId)
+               .OnDelete(DeleteBehavior.SetNull);
     }
 }

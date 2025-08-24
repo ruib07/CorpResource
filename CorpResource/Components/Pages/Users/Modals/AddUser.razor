@@ -1,0 +1,44 @@
+﻿@using MudBlazor
+@using CorpResource.Domain.Models
+
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="form" Model="@User">
+            <MudGrid Justify="Justify.Center" Spacing="3">
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="User.UserName" Label="UserName" Required />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="User.FullName" Label="FullName" Required />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="User.Email" InputType="InputType.Email" Label="Email" Required />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Value="User.Role.ToString()" Label="Role" ReadOnly />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudSelect T="Department"
+                               Label="Department"
+                               @bind-Value="SelectedDepartment">
+
+                        <MudSelectItem Value="@(null as Department)">(No Department)</MudSelectItem>
+
+                        @if (Departments is not null)
+                        {
+                            @foreach (var department in Departments)
+                            {
+                                <MudSelectItem Value="@department">@department.Name</MudSelectItem>
+                            }
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+
+            <div class="d-flex justify-content-center gap-3 mt-4 mb-4">
+                <MudButton StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" Variant="Variant.Filled" OnClick="Save">Save</MudButton>
+                <MudButton StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Default" Variant="Variant.Filled" OnClick="Cancel">Cancel</MudButton>
+            </div>
+        </MudForm>
+    </DialogContent>
+</MudDialog>

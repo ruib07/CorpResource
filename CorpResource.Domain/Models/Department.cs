@@ -1,11 +1,17 @@
-﻿namespace CorpResource.Domain.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace CorpResource.Domain.Models;
 
 public class Department
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public Guid ManagerId { get; set; }
-    public User Manager { get; set; }
+
+    public Guid? ManagerId { get; set; }
+
+    [JsonIgnore]
+    public User? Manager { get; set; }
+
     public DateTime CreatedAt { get; set; }
 
     public ICollection<User> Users { get; set; }
