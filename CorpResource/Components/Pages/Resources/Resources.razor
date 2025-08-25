@@ -1,14 +1,14 @@
-﻿@page "/users"
+﻿@page "/resources"
 
-<h1>Users</h1>
+<h1>Resources</h1>
 
 <div class="d-flex justify-content-end mb-4">
-    <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" OnClick="@CreateUser">
-        User
+    <MudButton Color="Color.Primary" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" OnClick="@CreateResource">
+        Resource
     </MudButton>
 </div>
 
-<MudTable Items="@filteredUsers" Hover="true" Bordered="true" Striped="true" RowsPerPage="10">
+<MudTable Items="@filteredResources" Hover="true" Bordered="true" Striped="true" RowsPerPage="10">
     <ToolBarContent>
         <MudTextField @bind-Value="_searchString"
                       Placeholder="Search"
@@ -27,21 +27,21 @@
         }
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="UserName">@context.UserName</MudTd>
-        <MudTd DataLabel="FullName">@context.FullName</MudTd>
-        <MudTd DataLabel="Email">@context.Email</MudTd>
-        <MudTd DataLabel="Role">@context.Role</MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Type">@context.Type</MudTd>
+        <MudTd DataLabel="Manager">@GetDepartmentName(context.DepartmentId)</MudTd>
+        <MudTd DataLabel="Status">@context.Status</MudTd>
+        <MudTd DataLabel="Description">@context.Description</MudTd>
         <MudTd DataLabel="CreatedAt">@context.CreatedAt.ToString("dd/MM/yyyy HH:mm")</MudTd>
-        <MudTd DataLabel="DepartmentId">@GetDepartmentName(context.DepartmentId)</MudTd>
         @* <MudTd>
             <div class="d-flex justify-content-between">
                 <MudIconButton Icon="@Icons.Material.Filled.Edit"
                                Color="Color.Primary"
-                               OnClick="@(() => EditUser(context.Id))" />
+                               OnClick="@(() => EditResource(context.Id))" />
 
                 <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                Color="Color.Error"
-                               OnClick="@(() => DeleteUser(context.Id))" />
+                               OnClick="@(() => DeleteResource(context.Id))" />
             </div>
         </MudTd> *@
     </RowTemplate>

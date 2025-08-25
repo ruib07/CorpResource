@@ -1,51 +1,46 @@
 ﻿using CorpResource.APIClient.Contracts;
-using CorpResource.Components.Pages.Users.Modals;
+using CorpResource.Components.Pages.Resources.Modals;
 using CorpResource.Components.Shared;
-using CorpResource.Domain.Enums;
 using CorpResource.Domain.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
-using System;
 
-namespace CorpResource.Components.Pages.Users;
+namespace CorpResource.Components.Pages.Resources;
 
-public partial class Users : ComponentBase
+public partial class Resources : ComponentBase
 {
     [Inject] IDialogService DialogService { get; set; }
     [Inject] IDepartmentsApiService DepartmentsApiService { get; set; }
-    [Inject] IUsersApiService UsersApiService { get; set; }
+    [Inject] IResourcesApiService ResourcesApiService { get; set; }
 
-    private IEnumerable<Department> _departments; 
-    private IEnumerable<User> _users;
+    private IEnumerable<Department> _departments;
+    private IEnumerable<Resource> _resources;
     private string _searchString = "";
-    private IEnumerable<User> filteredUsers;
+    private IEnumerable<Resource> filteredResources;
 
-    private readonly string[] headings = 
+    private readonly string[] headings =
     [
-        "User Name", "Full Name", "Email", 
-        "Role", "Created At", "Department", ""
+        "Name", "Type", "Department", "Status",
+        "Description", "Created At", ""
     ];
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            var allUsers = await UsersApiService.GetUsers();
-
-            _users = allUsers.Where(u => u.Role == Roles.User);
-
+            _resources = await ResourcesApiService.GetResources();
             _departments = await DepartmentsApiService.GetDepartments();
 
-            filteredUsers = _users;
+            filteredResources = _resources;
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine($"Error fetching users: {ex.Message}");
+            Console.Error.WriteLine($"Error fetching resources: {ex.Message}");
         }
     }
 
-    protected async Task CreateUser()
+    protected async Task CreateResource()
     {
         var options = new DialogOptions()
         {
@@ -54,14 +49,14 @@ public partial class Users : ComponentBase
             FullWidth = true
         };
 
-        var dialog = await DialogService.ShowAsync<AddUser>("Create User", options);
+        var dialog = await DialogService.ShowAsync<AddResource>("Create Resource", options);
         var result = await dialog.Result;
 
-        if (!result.Canceled && result.Data is User newUser)
+        if (!result.Canceled && result.Data is Resource newResource)
         {
-            var list = _users?.ToList() ?? [];
-            list.Add(newUser);
-            _users = list;
+            var list = _resources?.ToList() ?? [];
+            list.Add(newResource);
+            _resources = list;
             StateHasChanged();
         }
     }
@@ -78,14 +73,14 @@ public partial class Users : ComponentBase
 
     private void OnSearchChanged(KeyboardEventArgs args)
     {
-        filteredUsers = TableFilter.ApplySearch(
-            _users,
+        filteredResources = TableFilter.ApplySearch(
+            _resources,
             _searchString,
-            x => x.UserName,
-            x => x.FullName,
-            x => x.Email,
-            x => x.Role.ToString(),
-            x => GetDepartmentName(x.DepartmentId)).ToList();
+            x => x.Name,
+            x => x.Type.ToString(),
+            x => GetDepartmentName(x.DepartmentId),
+            x => x.Status.ToString(),
+            x => x.Description).ToList();
 
         StateHasChanged();
     }

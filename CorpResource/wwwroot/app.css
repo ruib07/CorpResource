@@ -7,6 +7,15 @@
     right: 0;
     z-index: 1200;
     padding: 0 1rem;
+    height: 64px;
+}
+
+.fixed-drawer {
+    position: fixed !important;
+    top: 64px;
+    left: 0;
+    height: calc(100% - 64px);
+    z-index: 1100;
 }
 
 .drawer-custom {
@@ -14,21 +23,22 @@
     color: white !important;
 }
 
-    .drawer-custom .mud-nav-link {
-        color: white !important;
-    }
+.drawer-custom .mud-nav-link {
+    color: white !important;
+}
 
-        .drawer-custom .mud-nav-link.mud-nav-link-active {
-            background-color: #555 !important;
-        }
+.drawer-custom .mud-nav-link.mud-nav-link-active {
+    background-color: #555 !important;
+}
 
-    .drawer-custom .mud-icon-root {
-        color: white !important;
-    }
+.drawer-custom .mud-icon-root {
+    color: white !important;
+}
 
 .page {
     display: flex;
     min-height: 100vh;
+    margin-top: 44px;
 }
 
 .main-content {
@@ -49,5 +59,10 @@
     .main-content--shifted {
         margin-left: 0 !important;
         padding-top: 56px;
+    }
+
+    .fixed-drawer {
+        top: 56px;
+        height: calc(100% - 56px);
     }
 }

@@ -1,0 +1,55 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudForm @ref="form" Model="@Resource">
+            <MudGrid Justify="Justify.Center" Spacing="3">
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="Resource.Name" Label="Name" Required Class="mb-4" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudSelect T="ResourceType" Label="Type" @bind-Value="Resource.Type" Required Class="mb-4">
+                        @foreach (var type in resourceTypes)
+                        {
+                            <MudSelectItem Value="@type">@type.ToString()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12">
+                    @if (Departments == null)
+                    {
+                        <MudText Typo="Typo.body2">Loading departments...</MudText>
+                    }
+                    else
+                    {
+                        <MudSelect T="string"
+                                   Label="Department"
+                                   @bind-Value="SelectedDepartmentId"
+                                   Required
+                                   Class="mb-4">
+                            @foreach (var department in Departments)
+                            {
+                                <MudSelectItem Value="@department.Id.ToString()">@department.Name</MudSelectItem>
+                            }
+                        </MudSelect>
+                    }
+                </MudItem>
+                <MudItem xs="12">
+                    <MudSelect T="ResourceStatus" Label="Status" @bind-Value="Resource.Status" Required Class="mb-4">
+                        @foreach (var status in resourceStatuses)
+                        {
+                            <MudSelectItem Value="@status">@status.ToString()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="Resource.Description" Label="Description" Lines="3" />
+                </MudItem>
+
+            </MudGrid>
+
+            <div class="d-flex justify-content-center gap-3 mt-4 mb-4">
+                <MudButton StartIcon="@Icons.Material.Filled.Save" Color="Color.Primary" Variant="Variant.Filled" OnClick="Save">Save</MudButton>
+                <MudButton StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Default" Variant="Variant.Filled" OnClick="Cancel">Cancel</MudButton>
+            </div>
+        </MudForm>
+    </DialogContent>
+</MudDialog>

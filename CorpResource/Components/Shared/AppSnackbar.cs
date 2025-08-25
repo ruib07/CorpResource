@@ -19,19 +19,11 @@ public class AppSnackbar : IAppSnackbar
 
     public void Success(string message)
     {
-        _snackbar.Add(message, Severity.Success, config =>
-        {
-            config.CloseAfterNavigation = true;
-            config.ShowCloseIcon = true;
-        });
+        _snackbar.Add(message, Severity.Success);
     }
 
     public void Error(string message)
     {
-        _snackbar.Add(message, Severity.Error, config =>
-        {
-            config.CloseAfterNavigation = true;
-            config.ShowCloseIcon = true;
-        });
+        _snackbar.Add(message, Severity.Error);
     }
 }

@@ -9,7 +9,18 @@
     </MudButton>
 </div>
 
-<MudTable Items="@_departments" Hover="true" Bordered="true" Striped="true" RowsPerPage="10">
+<MudTable Items="@filteredDepartments" Hover="true" Bordered="true" Striped="true" RowsPerPage="10">
+    <ToolBarContent>
+        <MudTextField @bind-Value="_searchString"
+                      Placeholder="Search"
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Class="mb-4"
+                      Immediate="true"
+                      OnKeyUp="OnSearchChanged" />
+    </ToolBarContent>
+
     <HeaderContent>
         @foreach (var heading in headings)
         {
@@ -18,7 +29,7 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="ManagerId">@context.ManagerId</MudTd>
+        <MudTd DataLabel="Manager">@GetManagerName(context.ManagerId)</MudTd>
         <MudTd DataLabel="CreatedAt">@context.CreatedAt.ToString("dd/MM/yyyy HH:mm")</MudTd>
         @* <MudTd>
             <div class="d-flex justify-content-between">

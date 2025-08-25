@@ -27,6 +27,7 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IUsersApiService, UsersApiService>();
         services.AddScoped<IDepartmentsApiService, DepartmentsApiService>();
+        services.AddScoped<IResourcesApiService, ResourceApiService>();
 
         return services;
     }
